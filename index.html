@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#91666b">
+<title>Glow Journey — 30 Day Beauty Planner</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+ --bg:#f8f1ef;
+ --card:#fff;
+ --text:#594547;
+ --accent:#91666b;
+ --soft:#ead6d2;
+ --muted:#806d6e;
+ --shadow:0 8px 30px rgba(60,30,30,.10);
+}
+
+body.dark{
+ --bg:#211b1c;
+ --card:#302728;
+ --text:#f7eeee;
+ --accent:#c58f95;
+ --soft:#49383a;
+ --muted:#d0bfc0;
+}
+
+body{
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Arial,sans-serif;
+ transition:.2s;
+}
+
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+
+.screen{
+ display:none;
+ min-height:100vh;
+}
+
+.screen.active{display:block}
+
+.hero{
+ min-height:100vh;
+ background:
+ linear-gradient(rgba(40,20,20,.2),rgba(40,20,20,.72)),
+ url("https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1400&q=85");
+ background-size:cover;
+ background-position:center;
+ display:flex;
+ align-items:flex-end;
+}
+
+.hero-overlay{
+ width:100%;
+ padding:45px 25px;
+ color:white;
+}
+
+.hero h1{
+ font-family:Georgia,serif;
+ font-size:clamp(40px,8vw,70px);
+ max-width:700px;
+ margin:15px 0;
+}
+
+.hero p{
+ font-size:18px;
+}
+
+.hero button,
+.primary-btn,
+.shop-btn{
+ border:0;
+ background:var(--accent);
+ color:white;
+ padding:14px 23px;
+ border-radius:30px;
+ font-weight:bold;
+ text-decoration:none;
+ display:inline-block;
+}
+
+.header{
+ position:sticky;
+ top:0;
+ z-index:50;
+ background:var(--accent);
+ color:white;
+ display:flex;
+ align-items:center;
+ gap:15px;
+ padding:14px 18px;
+}
+
+.header button{
+ border:0;
+ width:40px;
+ height:40px;
+ border-radius:50%;
+ background:white;
+ color:var(--accent);
+}
+
+.header h2{margin:0}
+
+.container{
+ max-width:1100px;
+ margin:auto;
+ padding:25px 20px 60px;
+}
+
+.template-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:22px;
+}
+
+.card{
+ background:var(--card);
+ border-radius:20px;
+ padding:18px;
+ box-shadow:var(--shadow);
+}
+
+.template-card img{
+ width:100%;
+ height:330px;
+ object-fit:cover;
+ border-radius:17px;
+}
+
+.template-card h2{
+ font-family:Georgia,serif;
+}
+
+.template-card p{
+ color:var(--muted);
+ line-height:1.6;
+}
+
+.template-card button,
+.feature-btn,
+.control-btn{
+ width:100%;
+ border:0;
+ padding:13px;
+ border-radius:25px;
+ background:var(--accent);
+ color:white;
+ margin-top:8px;
+}
+
+.gallery-grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+}
+
+.gallery-item{
+ background:var(--card);
+ padding:8px;
+ border-radius:15px;
+ box-shadow:var(--shadow);
+}
+
+.gallery-item img{
+ width:100%;
+ height:210px;
+ object-fit:cover;
+ border-radius:12px;
+}
+
+.gallery-item button{
+ width:100%;
+ border:0;
+ padding:10px;
+ margin-top:7px;
+ border-radius:20px;
+ background:var(--soft);
+ color:var(--text);
+}
+
+.day-photo{
+ width:100%;
+ max-height:580px;
+ object-fit:cover;
+}
+
+.day-body{
+ max-width:900px;
+ margin:auto;
+ padding:30px 20px 70px;
+}
+
+.day-label{
+ color:var(--accent);
+ font-weight:bold;
+ letter-spacing:2px;
+}
+
+.day-title{
+ font-family:Georgia,serif;
+ font-size:42px;
+}
+
+.description{
+ color:var(--muted);
+ line-height:1.7;
+}
+
+.task{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ background:var(--card);
+ margin:9px 0;
+ padding:15px;
+ border-radius:13px;
+ box-shadow:var(--shadow);
+}
+
+.task input{
+ width:21px;
+ height:21px;
+}
+
+.schedule-item{
+ display:flex;
+ align-items:center;
+ gap:15px;
+ background:var(--card);
+ margin:8px 0;
+ padding:15px;
+ border-radius:14px;
+}
+
+.schedule-time{
+ min-width:90px;
+ font-weight:bold;
+ color:var(--accent);
+}
+
+.schedule-check{
+ margin-left:auto;
+ width:20px;
+ height:20px;
+}
+
+.product-card{
+ margin-top:30px;
+ padding:25px;
+ background:var(--soft);
+ border-radius:22px;
+ text-align:center;
+}
+
+.product-card img{
+ width:210px;
+ height:210px;
+ object-fit:contain;
+ background:white;
+ border-radius:15px;
+}
+
+.controls{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
+ margin-bottom:25px;
+}
+
+.control-btn{
+ margin:0;
+}
+
+.food-card,
+.week-card,
+.month-card,
+.tool-card{
+ background:var(--card);
+ padding:20px;
+ margin:14px 0;
+ border-radius:20px;
+ box-shadow:var(--shadow);
+}
+
+.week-card img{
+ width:100%;
+ max-height:260px;
+ object-fit:cover;
+ border-radius:15px;
+}
+
+.progress{
+ height:12px;
+ background:var(--soft);
+ border-radius:20px;
+ overflow:hidden;
+ margin:10px 0 20px;
+}
+
+.progress-bar{
+ height:100%;
+ width:0;
+ background:var(--accent);
+ transition:.3s;
+}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+}
+
+.stat{
+ background:var(--card);
+ padding:20px;
+ border-radius:18px;
+ text-align:center;
+ box-shadow:var(--shadow);
+}
+
+.stat strong{
+ display:block;
+ font-size:30px;
+ color:var(--accent);
+}
+
+.stat span{
+ color:var(--muted);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="time"],
+textarea,
+select{
+ width:100%;
+ padding:13px;
+ border-radius:12px;
+ border:1px solid #ddd;
+ background:var(--card);
+ color:var(--text);
+ margin:6px 0;
+}
+
+textarea{min-height:160px}
+
+.tool-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:15px;
+}
+
+.water{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin:15px 0;
+}
+
+.water span{
+ font-size:30px;
+ cursor:pointer;
+ opacity:.3;
+}
+
+.water span.active{opacity:1}
+
+.stars button{
+ border:0;
+ background:none;
+ font-size:30px;
+ padding:3px;
+}
+
+.achievement{
+ display:inline-block;
+ padding:15px;
+ margin:5px;
+ border-radius:15px;
+ background:var(--soft);
+ text-align:center;
+}
+
+.achievement.locked{
+ opacity:.35;
+}
+
+.badge{
+ font-size:30px;
+ display:block;
+}
+
+.search-box{
+ margin-bottom:20px;
+}
+
+.category-buttons{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-bottom:20px;
+}
+
+.category-buttons button{
+ border:0;
+ padding:10px 15px;
+ border-radius:20px;
+ background:var(--soft);
+ color:var(--text);
+}
+
+.note-item{
+ padding:12px;
+ background:var(--soft);
+ border-radius:12px;
+ margin:8px 0;
+}
+
+.shopping-row{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ background:var(--card);
+ padding:12px;
+ margin:7px 0;
+ border-radius:12px;
+}
+
+.timer{
+ text-align:center;
+ font-size:55px;
+ font-weight:bold;
+ margin:20px;
+ color:var(--accent);
+}
+
+footer{
+ text-align:center;
+ padding:40px 20px;
+}
+
+footer a{
+ color:var(--accent);
+ font-weight:bold;
+ text-decoration:none;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ background:#000b;
+ z-index:999;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+
+.modal-box{
+ background:var(--card);
+ color:var(--text);
+ width:min(700px,100%);
+ max-height:90vh;
+ overflow:auto;
+ padding:25px;
+ border-radius:22px;
+}
+
+.close{
+ float:right;
+ border:0;
+ background:var(--soft);
+ width:38px;
+ height:38px;
+ border-radius:50%;
+}
+
+@media(max-width:800px){
+ .template-grid{grid-template-columns:1fr}
+ .gallery-grid{grid-template-columns:repeat(2,1fr)}
+ .controls{grid-template-columns:repeat(2,1fr)}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .tool-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:450px){
+ .gallery-item img{height:160px}
+ .day-title{font-size:34px}
+ .schedule-item{align-items:flex-start}
+ .schedule-time{min-width:72px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<section id="home" class="screen active">
+ <div class="hero">
+  <div class="hero-overlay">
+   <small>THE GLOW JOURNEY</small>
+   <h1>Your 30-Day Beauty Journey</h1>
+   <p>Beauty • Skincare • Food • Self-Care • Daily Planning</p>
+   <button onclick="showTemplates()">START YOUR JOURNEY</button>
+  </div>
+ </div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" class="screen">
+ <div class="header">
+  <button onclick="goHome()">←</button>
+  <h2>Choose Your Style</h2>
+ </div>
+ <div class="container">
+  <div id="templateGrid" class="template-grid"></div>
+ </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="screen">
+ <div class="header">
+  <button onclick="showTemplates()">←</button>
+  <h2 id="galleryTitle">Gallery</h2>
+ </div>
+ <div class="container">
+  <div id="galleryGrid" class="gallery-grid"></div>
+ </div>
+</section>
+
+<!-- DAY -->
+<section id="day" class="screen">
+ <div class="header">
+  <button onclick="showGallery()">←</button>
+  <h2 id="dayTitle">Day 1</h2>
+ </div>
+ <div id="dayContent"></div>
+</section>
+
+<!-- WEEK -->
+<section id="week" class="screen">
+ <div class="header">
+  <button onclick="openDay(currentDay)">←</button>
+  <h2>Weekly Plan</h2>
+ </div>
+ <div class="container">
+  <div id="weekContent"></div>
+ </div>
+</section>
+
+<!-- MONTH -->
+<section id="month" class="screen">
+ <div class="header">
+  <button onclick="openDay(currentDay)">←</button>
+  <h2>30-Day Month</h2>
+ </div>
+ <div class="container">
+  <div id="monthContent"></div>
+ </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" class="screen">
+ <div class="header">
+  <button onclick="openDay(currentDay)">←</button>
+  <h2>My Daily Tools</h2>
+ </div>
+
+ <div class="container">
+
+  <div class="tool-grid">
+
+   <div class="tool-card">
+    <h2>💧 Water Tracker</h2>
+    <p>Tap each glass you drink.</p>
+    <div id="waterGlasses" class="water"></div>
+    <p id="waterText">0 / 8 glasses</p>
+    <button class="control-btn" onclick="resetWater()">RESET WATER</button>
+   </div>
+
+   <div class="tool-card">
+    <h2>😴 Sleep Tracker</h2>
+    <label>Bedtime</label>
+    <input id="bedTime" type="time">
+    <label>Wake time</label>
+    <input id="wakeTime" type="time">
+    <button class="control-btn" onclick="saveSleep()">SAVE SLEEP</button>
+    <p id="sleepResult"></p>
+   </div>
+
+   <div class="tool-card">
+    <h2>🌅 Routine Builder</h2>
+    <label><input id="routineMorning" type="checkbox"> Morning routine</label><br>
+    <label><input id="routineAfternoon" type="checkbox"> Afternoon routine</label><br>
+    <label><input id="routineNight" type="checkbox"> Night routine</label>
+    <button class="control-btn" onclick="saveRoutine()">SAVE ROUTINE</button>
+   </div>
+
+   <div class="tool-card">
+    <h2>🧘 Self-Care Timer</h2>
+    <div id="timer" class="timer">05:00</div>
+    <button class="control-btn" onclick="startTimer()">START 5 MIN</button>
+    <button class="control-btn" onclick="stopTimer()">STOP</button>
+   </div>
+
+  </div>
+
+  <div class="tool-card">
+   <h2>🛍️ Shopping List</h2>
+   <input id="shoppingInput" type="text" placeholder="Add a product">
+   <button class="control-btn" onclick="addShopping()">ADD ITEM</button>
+   <div id="shoppingList"></div>
+  </div>
+
+  <div class="tool-card">
+   <h2>📝 Progress Journal</h2>
+   <textarea id="journal" placeholder="Write today's thoughts..."></textarea>
+   <button class="control-btn" onclick="saveJournal()">SAVE JOURNAL</button>
+  </div>
+
+  <div class="tool-card">
+   <h2>⭐ Product Rating</h2>
+   <div class="stars" id="stars"></div>
+   <p id="ratingText">No rating yet</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- FOOD -->
+<section id="food" class="screen">
+ <div class="header">
+  <button onclick="openDay(currentDay)">←</button>
+  <h2>🍎 Food Board</h2>
+ </div>
+
+ <div class="container">
+
+  <div class="food-card">
+   <h2>🌅 Breakfast</h2>
+   <p>Oatmeal with fruit, yogurt, whole-grain toast, or another balanced breakfast you enjoy.</p>
+  </div>
+
+  <div class="food-card">
+   <h2>🥗 Lunch</h2>
+   <p>Try vegetables, grains and a protein source in a balanced meal.</p>
+  </div>
+
+  <div class="food-card">
+   <h2>🍎 Snack</h2>
+   <p>Fruit, yogurt, nuts when appropriate, or another snack you enjoy.</p>
+  </div>
+
+  <div class="food-card">
+   <h2>🍽️ Dinner</h2>
+   <p>Build a balanced dinner with vegetables, grains and a protein source.</p>
+  </div>
+
+  <div class="food-card">
+   <h2>💧 Hydration</h2>
+   <p>Keep water available and drink regularly according to your thirst.</p>
+  </div>
+
+  <p>
+   Food suggestions are general wellness ideas, not a medical diet plan.
+  </p>
+
+ </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="screen">
+ <div class="header">
+  <button onclick="openDay(currentDay)">←</button>
+  <h2>📊 Dashboard</h2>
+ </div>
+
+ <div class="container">
+
+  <div class="stats">
+   <div class="stat">
+    <strong id="overall">0%</strong>
+    <span>Overall Progress</span>
+   </div>
+   <div class="stat">
+    <strong id="completed">0</strong>
+    <span>Days Completed</span>
+   </div>
+   <div class="stat">
+    <strong id="streak">0</strong>
+    <span>Streak</span>
+   </div>
+   <div class="stat">
+    <strong id="waterDashboard">0</strong>
+    <span>Today's Glasses</span>
+   </div>
+  </div>
+
+  <h2>🏅 Achievements</h2>
+  <div id="achievements"></div>
+
+  <h2>📈 Progress</h2>
+  <div class="progress">
+   <div id="overallBar" class="progress-bar"></div>
+  </div>
+
+  <button class="control-btn" onclick="resetChallenge()">
+   🔄 RESET 30-DAY CHALLENGE
+  </button>
+
+  <button class="control-btn" onclick="shareProgress()">
+   📤 SHARE PROGRESS
+  </button>
+
+ </div>
+</section>
+
+<!-- SEARCH -->
+<section id="search" class="screen">
+ <div class="header">
+  <button onclick="openDay(currentDay)">←</button>
+  <h2>🔍 Search</h2>
+ </div>
+
+ <div class="container">
+
+  <input
+   id="searchInput"
+   class="search-box"
+   type="text"
+   placeholder="Search skincare, food, routine, product..."
+   oninput="runSearch()">
+
+  <div class="category-buttons">
+   <button onclick="filterCategory('all')">All</button>
+   <button onclick="filterCategory('skincare')">Skincare</button>
+   <button onclick="filterCategory('haircare')">Haircare</button>
+   <button onclick="filterCategory('food')">Food</button>
+   <button onclick="filterCategory('selfcare')">Self-Care</button>
+  </div>
+
+  <div id="searchResults"></div>
+
+ </div>
+</section>
+
+<footer>
+ <a href="https://pin.it/6eJIeYbZW"
+    target="_blank"
+    rel="noopener noreferrer">
+   📌 FOLLOW ON PINTEREST
+ </a>
+</footer>
+
+<script>
+/* =====================================================
+   LINKS
+===================================================== */
+
+const AMAZON_LINK="https://amzn.to/3UhrAO2";
+const PINTEREST_LINK="https://pin.it/6eJIeYbZW";
+
+let currentDay=1;
+let selectedStyle="natural";
+let timerSeconds=300;
+let timerInterval=null;
+
+
+/* =====================================================
+   STYLES
+===================================================== */
+
+const styles={
+ natural:{
+  name:"Natural Glow",
+  description:"A simple everyday routine focused on consistency, gentle skincare and self-care.",
+  cover:"https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=85"
+ },
+
+ luxury:{
+  name:"Luxury Beauty",
+  description:"A polished beauty and self-care experience with an elegant daily routine.",
+  cover:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85"
+ },
+
+ clean:{
+  name:"Clean Beauty",
+  description:"A minimal routine focused on organization, simplicity and consistent self-care.",
+  cover:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=1200&q=85"
+ }
+};
+
+
+/* =====================================================
+   30 DAYS
+===================================================== */
+
+const dayTitles=[
+"Start Your Glow Journey",
+"Hydration Day",
+"Clean Your Beauty Tools",
+"Simple Self-Care",
+"Product Check",
+"Move & Refresh",
+"Week One Review",
+"Fresh Start",
+"Simple Skincare",
+"Morning Glow",
+"Clean Beauty Space",
+"Healthy Habits",
+"Organize Your Products",
+"Week Two Review",
+"Natural Makeup",
+"Hair & Skin Care",
+"Lip Care",
+"Confidence Day",
+"Tool Cleaning",
+"Simple Beauty",
+"Week Three Review",
+"Consistency Day",
+"Clean Space",
+"Screen Break",
+"Routine Check",
+"Self-Care Day",
+"Confidence Look",
+"Progress Day",
+"Favorite Routine",
+"Challenge Complete 🎉"
+];
+
+
+/* =====================================================
+   PHOTO SETS
+===================================================== */
+
+const photoSets={
+
+natural:[
+"https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?auto=format&fit=crop&w=1000&q=85"
+],
+
+luxury:[
+"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=85"
+],
+
+clean:[
+"https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&w=1000&q=85",
+"https://images.unsplash.com/photo-1570554886111-e80feca9c7b5?auto=format&fit=crop&w=1000&q=85"
+]
+};
+
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+const products={
+ natural:{
+  name:"Daily Hydration Pick",
+  image:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=700&q=85",
+  description:"A simple skincare product inspiration.",
+  use:"Follow the manufacturer's directions and use only as instructed."
+ },
+
+ luxury:{
+  name:"Luxury Beauty Pick",
+  image:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=85",
+  description:"A premium beauty-routine product inspiration.",
+  use:"Follow the product label and use as directed."
+ },
+
+ clean:{
+  name:"Minimal Routine Pick",
+  image:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=700&q=85",
+  description:"A simple product idea for a minimal routine.",
+  use:"Use according to the manufacturer's instructions."
+ }
+};
+
+
+/* =====================================================
+   DAILY TIPS
+===================================================== */
+
+const tips=[
+"Keep your routine simple and consistent.",
+"Drink water regularly throughout your day.",
+"Clean frequently used beauty tools regularly.",
+"Give yourself a short relaxation break.",
+"Check product labels before use.",
+"Protect your skin from excessive sun exposure.",
+"Review your progress at the end of the week.",
+"Keep your beauty space organized.",
+"Do not add too many new products at once.",
+"Create a calm morning routine.",
+"Clean your frequently touched surfaces.",
+"Make time for a relaxing activity.",
+"Organize products by how often you use them.",
+"Celebrate consistency rather than perfection.",
+"Keep makeup tools clean.",
+"Give your hair and skin gentle care.",
+"Keep lip products clean and personal.",
+"Take a positive break from screens.",
+"Review your routine before adding products.",
+"Keep your evening routine simple.",
+"Review what worked this week.",
+"Consistency makes routines easier to maintain.",
+"Keep your personal space comfortable.",
+"Take a short screen break.",
+"Prepare your routine for tomorrow.",
+"Make time for something you enjoy.",
+"Choose a routine that feels comfortable.",
+"Look back at your progress.",
+"Choose your favorite routine.",
+"Celebrate completing your 30-day challenge."
+];
+
+
+/* =====================================================
+   SCREEN
+===================================================== */
+
+function showScreen(id){
+ document.querySelectorAll(".screen")
+ .forEach(x=>x.classList.remove("active"));
+
+ document.getElementById(id).classList.add("active");
+
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function goHome(){showScreen("home")}
+
+
+/* =====================================================
+   TEMPLATES
+===================================================== */
+
+function showTemplates(){
+ renderTemplates();
+ showScreen("templates");
+}
+
+function renderTemplates(){
+
+ const grid=document.getElementById("templateGrid");
+ grid.innerHTML="";
+
+ Object.keys(styles).forEach(key=>{
+
+  const s=styles[key];
+
+  grid.innerHTML+=`
+   <div class="template-card card">
+
+    <img src="${s.cover}" alt="${s.name}">
+
+    <h2>${s.name}</h2>
+
+    <p>${s.description}</p>
+
+    <button onclick="selectStyle('${key}')">
+      TAP TO OPEN
+    </button>
+
+   </div>
+  `;
+ });
+}
+
+function selectStyle(style){
+ selectedStyle=style;
+ renderGallery();
+ showScreen("gallery");
+}
+
+
+/* =====================================================
+   GALLERY — 30 DAYS
+===================================================== */
+
+function getDayPhoto(day){
+
+ const photos=photoSets[selectedStyle];
+
+ return photos[(day-1)%photos.length];
+}
+
+function renderGallery(){
+
+ const grid=document.getElementById("galleryGrid");
+
+ grid.innerHTML="";
+
+ for(let day=1;day<=30;day++){
+
+  const photo=getDayPhoto(day);
+
+  grid.innerHTML+=`
+   <div class="gallery-item">
+
+    <img
+      src="${photo}"
+      alt="${styles[selectedStyle].name} Day ${day}">
+
+    <button onclick="openDay(${day})">
+      DAY ${day}
+    </button>
+
+   </div>
+  `;
+ }
+
+ document.getElementById("galleryTitle").textContent=
+ styles[selectedStyle].name+" — 30 Day Gallery";
+}
+
+function showGallery(){
+ renderGallery();
+ showScreen("gallery");
+}
+
+
+/* =====================================================
+   TASKS
+===================================================== */
+
+function getTasks(day){
+
+ return[
+  "Complete your morning routine",
+  "Drink water regularly",
+  "Follow daytime skincare as directed",
+  "Complete one self-care activity",
+  "Complete your evening routine"
+ ];
+}
+
+
+/* =====================================================
+   24-HOUR SCHEDULE
+===================================================== */
+
+function getSchedule(day){
+
+ return[
+  ["7:00 AM","Wake up and drink water."],
+  ["7:30 AM","Morning skincare routine."],
+  ["8:00 AM","Breakfast and prepare for your day."],
+  ["9:00 AM","Daytime SPF as directed by the product label."],
+  ["10:00 AM","Short movement break."],
+  ["11:00 AM","Continue your normal activities."],
+  ["12:00 PM","Lunch and hydration."],
+  ["1:00 PM","Short screen break."],
+  ["2:00 PM","Work, study or personal activities."],
+  ["3:00 PM","Hydration check."],
+  ["4:00 PM","Relaxation break."],
+  ["5:00 PM","Walk, stretch or comfortable activity."],
+  ["6:00 PM","Dinner and personal time."],
+  ["7:00 PM","Prepare your evening environment."],
+  ["8:00 PM","Remove makeup if worn."],
+  ["9:00 PM","Night skincare routine."],
+  ["10:00 PM","Prepare for tomorrow."],
+  ["10:30 PM","Relax and prepare for sleep."]
+ ];
+}
+
+
+/* =====================================================
+   DAY
+===================================================== */
+
+function openDay(day){
+
+ currentDay=day;
+
+ renderDay();
+
+ showScreen("day");
+}
+
+function renderDay(){
+
+ const style=styles[selectedStyle];
+ const product=products[selectedStyle];
+ const photo=getDayPhoto(currentDay);
+
+ let taskHTML="";
+
+ getTasks(currentDay).forEach((task,i)=>{
+
+  const key=`${selectedStyle}_d${currentDay}_t${i}`;
+
+  const checked=localStorage.getItem(key)==="yes";
+
+  taskHTML+=`
+   <label class="task">
+
+    <input
+      type="checkbox"
+      ${checked?"checked":""}
+      onchange="saveCheck('${key}',this.checked)">
+
+    <span>${task}</span>
+
+   </label>
+  `;
+ });
+
+
+ let scheduleHTML="";
+
+ getSchedule(currentDay).forEach((item,i)=>{
+
+  const key=`${selectedStyle}_d${currentDay}_s${i}`;
+
+  const checked=localStorage.getItem(key)==="yes";
+
+  scheduleHTML+=`
+   <div class="schedule-item">
+
+    <div class="schedule-time">${item[0]}</div>
+
+    <div>${item[1]}</div>
+
+    <input
+      class="schedule-check"
+      type="checkbox"
+      ${checked?"checked":""}
+      onchange="saveCheck('${key}',this.checked)">
+
+   </div>
+  `;
+ });
+
+
+ document.getElementById("dayTitle").textContent=
+ `Day ${currentDay}`;
+
+ document.getElementById("dayContent").innerHTML=`
+
+  <img class="day-photo"
+       src="${photo}"
+       alt="${style.name} Day ${currentDay}">
+
+  <div class="day-body">
+
+   <div class="day-label">
+    ${style.name.toUpperCase()} • DAY ${currentDay}/30
+   </div>
+
+   <h1 class="day-title">
+    ${dayTitles[currentDay-1]}
+   </h1>
+
+   <p class="description">
+    ${style.description}
+   </p>
+
+   <div class="card">
+    <h3>💡 Today's Tip</h3>
+    <p>${tips[currentDay-1]}</p>
+   </div>
+
+   <h2>✅ Today's Checklist</h2>
+   ${taskHTML}
+
+   <h2>⏰ 24-Hour Schedule</h2>
+   ${scheduleHTML}
+
+   <div class="product-card">
+
+    <img src="${product.image}"
+         alt="${product.name}">
+
+    <h2>${product.name}</h2>
+
+    <p>${product.description}</p>
+
+    <h3>How To Use</h3>
+
+    <p>${product.use}</p>
+
+    <a class="shop-btn"
+       href="${AMAZON_LINK}"
+       target="_blank"
+       rel="noopener noreferrer">
+       🛒 SHOP NOW
+    </a>
+
+   </div>
+
+   <div class="controls" style="margin-top:25px">
+
+    <button class="control-btn"
+            onclick="openWeekly()">
+      📅 WEEK
+    </button>
+
+    <button class="control-btn"
+            onclick="openMonthly()">
+      🗓️ MONTH
+    </button>
+
+    <button class="control-btn"
+            onclick="openFoodBoard()">
+      🍎 FOOD
+    </button>
+
+    <button class="control-btn"
+            onclick="openTools()">
+      ✨ TOOLS
+    </button>
+
+    <button class="control-btn"
+            onclick="openDashboard()">
+      📊 DASHBOARD
+    </button>
+
+    <button class="control-btn"
+            onclick="openSearch()">
+      🔍 SEARCH
+    </button>
+
+   </div>
+
+   <div class="day-navigation">
+
+    <button class="primary-btn"
+            onclick="previousDay()">
+      ← Previous
+    </button>
+
+    <span>
+      Day ${currentDay} / 30
+    </span>
+
+    <button class="primary-btn"
+            onclick="nextDay()">
+      Next →
+    </button>
+
+   </div>
+
+  </div>
+ `;
+}
+
+function saveCheck(key,value){
+
+ if(value)
+  localStorage.setItem(key,"yes");
+ else
+  localStorage.removeItem(key);
+}
+
+function nextDay(){
+ if(currentDay<30){
+  currentDay++;
+  renderDay();
+ }
+}
+
+function previousDay(){
+ if(currentDay>1){
+  currentDay--;
+  renderDay();
+ }
+}
+
+
+/* =====================================================
+   WEEK
+===================================================== */
+
+function openWeekly(){
+
+ const week=Math.ceil(currentDay/7);
+ const start=(week-1)*7+1;
+ const end=Math.min(week*7,30);
+
+ let html="";
+
+ for(let d=start;d<=end;d++){
+
+  const progress=getDayProgress(d);
+
+  html+=`
+   <div class="week-card">
+
+    <img src="${getDayPhoto(d)}">
+
+    <h2>Day ${d}: ${dayTitles[d-1]}</h2>
+
+    <p>${tips[d-1]}</p>
+
+    <div class="progress">
+     <div class="progress-bar"
+          style="width:${progress}%">
+     </div>
+    </div>
+
+    <p>${progress}% complete</p>
+
+    <button class="primary-btn"
+            onclick="openDay(${d})">
+      OPEN DAY ${d}
+    </button>
+
+   </div>
+  `;
+ }
+
+ document.getElementById("weekContent").innerHTML=html;
+
+ showScreen("week");
+}
+
+
+/* =====================================================
+   MONTH
+===================================================== */
+
+function openMonthly(){
+
+ let html="";
+
+ for(let week=1;week<=5;week++){
+
+  const start=(week-1)*7+1;
+  const end=Math.min(week*7,30);
+
+  let completed=0;
+
+  for(let d=start;d<=end;d++){
+   if(getDayProgress(d)===100) completed++;
+  }
+
+  const total=end-start+1;
+  const percent=Math.round((completed/total)*100);
+
+  html+=`
+   <div class="month-card">
+
+    <h2>
+     ${styles[selectedStyle].name}
+     — Week ${week}
+    </h2>
+
+    <p>Days ${start}–${end}</p>
+
+    <div class="progress">
+     <div class="progress-bar"
+          style="width:${percent}%">
+     </div>
+    </div>
+
+    <p>${percent}% completed</p>
+
+    <p>
+     Morning routine • Hydration • Skincare •
+     Self-care • Night routine
+    </p>
+
+   </div>
+  `;
+ }
+
+ document.getElementById("monthContent").innerHTML=html;
+
+ showScreen("month");
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+function getDayProgress(day){
+
+ let total=getTasks(day).length;
+ let done=0;
+
+ for(let i=0;i<total;i++){
+
+  const key=`${selectedStyle}_d${day}_t${i}`;
+
+  if(localStorage.getItem(key)==="yes")
+   done++;
+ }
+
+ return Math.round((done/total)*100);
+}
+
+function getCompletedDays(){
+
+ let count=0;
+
+ for(let d=1;d<=30;d++){
+
+  if(getDayProgress(d)===100)
+   count++;
+ }
+
+ return count;
+}
+
+function calculateStreak(){
+
+ let streak=0;
+
+ for(let d=1;d<=30;d++){
+
+  if(getDayProgress(d)===100)
+   streak++;
+  else
+   break;
+ }
+
+ return streak;
+}
+
+
+/* =====================================================
+   DASHBOARD + ACHIEVEMENTS
+===================================================== */
+
+function openDashboard(){
+
+ updateDashboard();
+
+ showScreen("dashboard");
+}
+
+function updateDashboard(){
+
+ const completed=getCompletedDays();
+
+ const overall=Math.round(
+   completed/30*100
+ );
+
+ document.getElementById("overall").textContent=
+ overall+"%";
+
+ document.getElementById("completed").textContent=
+ completed;
+
+ document.getElementById("streak").textContent=
+ calculateStreak();
+
+ document.getElementById("waterDashboard").textContent=
+ getWater();
+
+ document.getElementById("overallBar").style.width=
+ overall+"%";
+
+ const milestones=[7,14,21,30];
+
+ let html="";
+
+ milestones.forEach(m=>{
+
+  const unlocked=completed>=m;
+
+  html+=`
+   <div class="achievement ${unlocked?"":"locked"}">
+    <span class="badge">
+      ${unlocked?"🏆":"🔒"}
+    </span>
+    <strong>${m}-Day Badge</strong>
+   </div>
+  `;
+ });
+
+ document.getElementById("achievements").innerHTML=html;
+}
+
+
+/* =====================================================
+   WATER TRACKER
+===================================================== */
+
+function getWater(){
+
+ return Number(
+  localStorage.getItem(
+   `water_${selectedStyle}_${currentDay}`
+  )||0
+ );
+}
+
+function renderWater(){
+
+ const container=document.getElementById("waterGlasses");
+
+ if(!container)return;
+
+ const count=getWater();
+
+ container.innerHTML="";
+
+ for(let i=1;i<=8;i++){
+
+  const glass=document.createElement("span");
+
+  glass.textContent="💧";
+
+  if(i<=count)
+   glass.classList.add("active");
+
+  glass.onclick=()=>{
+
+   localStorage.setItem(
+    `water_${selectedStyle}_${currentDay}`,
+    i
+   );
+
+   renderWater();
+
+  };
+
+  container.appendChild(glass);
+ }
+
+ document.getElementById("waterText").textContent=
+ `${count} / 8 glasses`;
+
+ const wd=document.getElementById("waterDashboard");
+
+ if(wd)
+  wd.textContent=count;
+}
+
+function resetWater(){
+
+ localStorage.removeItem(
+  `water_${selectedStyle}_${currentDay}`
+ );
+
+ renderWater();
+}
+
+
+/* =====================================================
+   SLEEP TRACKER
+===================================================== */
+
+function saveSleep(){
+
+ const bed=document.getElementById("bedTime").value;
+ const wake=document.getElementById("wakeTime").value;
+
+ localStorage.setItem(
+  `sleep_${selectedStyle}_${currentDay}`,
+  JSON.stringify({bed,wake})
+ );
+
+ document.getElementById("sleepResult").textContent=
+ "✓ Sleep record saved.";
+}
+
+function loadSleep(){
+
+ const data=JSON.parse(
+  localStorage.getItem(
+   `sleep_${selectedStyle}_${currentDay}`
+  )||"null"
+ );
+
+ if(!data)return;
+
+ document.getElementById("bedTime").value=data.bed||"";
+ document.getElementById("wakeTime").value=data.wake||"";
+}
+
+
+/* =====================================================
+   ROUTINE BUILDER
+===================================================== */
+
+function saveRoutine(){
+
+ const routine={
+  morning:document.getElementById("routineMorning").checked,
+  afternoon:document.getElementById("routineAfternoon").checked,
+  night:document.getElementById("routineNight").checked
+ };
+
+ localStorage.setItem(
+  `routine_${selectedStyle}_${currentDay}`,
+  JSON.stringify(routine)
+ );
+
+ alert("Routine saved!");
+}
+
+function loadRoutine(){
+
+ const r=JSON.parse(
+  localStorage.getItem(
+   `routine_${selectedStyle}_${currentDay}`
+  )||"null"
+ );
+
+ if(!r)return;
+
+ document.getElementById("routineMorning").checked=!!r.morning;
+ document.getElementById("routineAfternoon").checked=!!r.afternoon;
+ document.getElementById("routineNight").checked=!!r.night;
+}
+
+
+/* =====================================================
+   SELF-CARE TIMER
+===================================================== */
+
+function updateTimer(){
+
+ const min=Math.floor(timerSeconds/60);
+ const sec=timerSeconds%60;
+
+ document.getElementById("timer").textContent=
+ `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+}
+
+function startTimer(){
+
+ if(timerInterval)return;
+
+ timerInterval=setInterval(()=>{
+
+  if(timerSeconds<=0){
+
+   clearInterval(timerInterval);
+   timerInterval=null;
+
+   alert("✨ Self-care timer complete!");
+
+   return;
+  }
+
+  timerSeconds--;
+  updateTimer();
+
+ },1000);
+}
+
+function stopTimer(){
+
+ clearInterval(timerInterval);
+ timerInterval=null;
+}
+
+function resetTimer(){
+
+ stopTimer();
+ timerSeconds=300;
+ updateTimer();
+}
+
+
+/* =====================================================
+   SHOPPING LIST
+===================================================== */
+
+function addShopping(){
+
+ const input=document.getElementById("shoppingInput");
+ const value=input.value.trim();
+
+ if(!value)return;
+
+ const list=
+ JSON.parse(
+  localStorage.getItem("shoppingList")||"[]"
+ );
+
+ list.push({
+  text:value,
+  done:false
+ });
+
+ localStorage.setItem(
+  "shoppingList",
+  JSON.stringify(list)
+ );
+
+ input.value="";
+
+ renderShopping();
+}
+
+function renderShopping(){
+
+ const container=document.getElementById("shoppingList");
+
+ if(!container)return;
+
+ const list=
+ JSON.parse(
+  localStorage.getItem("shoppingList")||"[]"
+ );
+
+ container.innerHTML="";
+
+ list.forEach((item,i)=>{
+
+  container.innerHTML+=`
+   <div class="shopping-row">
+
+    <input type="checkbox"
+      ${item.done?"checked":""}
+      onchange="toggleShopping(${i},this.checked)">
+
+    <span style="flex:1">
+      ${escapeHTML(item.text)}
+    </span>
+
+    <button
+      onclick="deleteShopping(${i})">
+      ❌
+    </button>
+
+   </div>
+  `;
+ });
+}
+
+function toggleShopping(i,value){
+
+ const list=
+ JSON.parse(
+  localStorage.getItem("shoppingList")||"[]"
+ );
+
+ list[i].done=value;
+
+ localStorage.setItem(
+  "shoppingList",
+  JSON.stringify(list)
+ );
+}
+
+function deleteShopping(i){
+
+ const list=
+ JSON.parse(
+  localStorage.getItem("shoppingList")||"[]"
+ );
+
+ list.splice(i,1);
+
+ localStorage.setItem(
+  "shoppingList",
+  JSON.stringify(list)
+ );
+
+ renderShopping();
+}
+
+
+/* =====================================================
+   JOURNAL
+===================================================== */
+
+function saveJournal(){
+
+ const text=
+ document.getElementById("journal").value;
+
+ localStorage.setItem(
+  `journal_${selectedStyle}_${currentDay}`,
+  text
+ );
+
+ alert("✓ Journal saved.");
+}
+
+function loadJournal(){
+
+ const text=
+ localStorage.getItem(
+  `journal_${selectedStyle}_${currentDay}`
+ )||"";
+
+ document.getElementById("journal").value=text;
+}
+
+
+/* =====================================================
+   PRODUCT RATING
+===================================================== */
+
+function renderStars(){
+
+ const box=document.getElementById("stars");
+
+ if(!box)return;
+
+ const saved=
+ Number(
+  localStorage.getItem(
+   `rating_${selectedStyle}`
+  )||0
+ );
+
+ box.innerHTML="";
+
+ for(let i=1;i<=5;i++){
+
+  const b=document.createElement("button");
+
+  b.textContent=i<=saved?"⭐":"☆";
+
+  b.onclick=()=>{
+
+   localStorage.setItem(
+    `rating_${selectedStyle}`,
+    i
+   );
+
+   renderStars();
+
+  };
+
+  box.appendChild(b);
+ }
+
+ document.getElementById("ratingText").textContent=
+ saved?`${saved} / 5 stars`:"No rating yet";
+}
+
+
+/* =====================================================
+   TOOLS
+===================================================== */
+
+function openTools(){
+
+ renderWater();
+ loadSleep();
+ loadRoutine();
+ loadJournal();
+ renderShopping();
+ renderStars();
+ resetTimer();
+
+ showScreen("tools");
+}
+
+
+/* =====================================================
+   FOOD BOARD
+===================================================== */
+
+function openFoodBoard(){
+
+ showScreen("food");
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+const searchData=[
+
+ {title:"Morning Skincare",category:"skincare",text:"Gentle morning skincare and daytime SPF."},
+ {title:"Night Routine",category:"skincare",text:"Cleanse and complete your evening routine."},
+ {title:"Hair Care",category:"haircare",text:"Simple hair care and organization."},
+ {title:"Breakfast",category:"food",text:"Oatmeal, fruit, yogurt or another balanced breakfast."},
+ {title:"Hydration",category:"food",text:"Keep water available during the day."},
+ {title:"Self-Care Break",category:"selfcare",text:"Take a short relaxation break."},
+ {title:"Beauty Tools",category:"skincare",text:"Keep frequently used beauty tools clean."},
+ {title:"Shopping List",category:"selfcare",text:"Add products you need to your shopping list."}
+];
+
+function openSearch(){
+
+ runSearch();
+
+ showScreen("search");
+}
+
+function runSearch(){
+
+ const input=
+ document.getElementById("searchInput");
+
+ if(!input)return;
+
+ const q=input.value.toLowerCase();
+
+ const results=
+ searchData.filter(x=>
+  x.title.toLowerCase().includes(q)||
+  x.text.toLowerCase().includes(q)
+ );
+
+ renderSearch(results);
+}
+
+function filterCategory(category){
+
+ const results=
+ category==="all"
+ ? searchData
+ : searchData.filter(x=>x.category===category);
+
+ renderSearch(results);
+}
+
+function renderSearch(results){
+
+ const box=document.getElementById("searchResults");
+
+ box.innerHTML="";
+
+ results.forEach(x=>{
+
+  box.innerHTML+=`
+   <div class="food-card">
+    <h3>${x.title}</h3>
+    <small>${x.category}</small>
+    <p>${x.text}</p>
+   </div>
+  `;
+ });
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+function toggleDarkMode(){
+
+ document.body.classList.toggle("dark");
+
+ localStorage.setItem(
+  "darkMode",
+  document.body.classList.contains("dark")
+ );
+
+}
+
+if(localStorage.getItem("darkMode")==="true")
+ document.body.classList.add("dark");
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetChallenge(){
+
+ const ok=confirm(
+  "Reset your 30-day progress, water and routine data?"
+ );
+
+ if(!ok)return;
+
+ for(let i=0;i<localStorage.length;i++){
+
+  const key=localStorage.key(i);
+
+  if(
+   key &&
+   (
+    key.includes("_d")||
+    key.startsWith("water_")||
+    key.startsWith("sleep_")||
+    key.startsWith("routine_")||
+    key.startsWith("journal_")
+   )
+  ){
+   localStorage.removeItem(key);
+  }
+ }
+
+ alert("30-day challenge reset.");
+ updateDashboard();
+}
+
+
+/* =====================================================
+   SHARE PROGRESS
+===================================================== */
+
+async function shareProgress(){
+
+ const completed=getCompletedDays();
+ const text=
+ `✨ My Glow Journey Progress\n\n`+
+ `${completed}/30 days completed\n`+
+ `${Math.round(completed/30*100)}% progress\n`+
+ `Style: ${styles[selectedStyle].name}`;
+
+ if(navigator.share){
+
+  try{
+   await navigator.share({
+    title:"My Glow Journey",
+    text:text
+   });
+  }catch(e){}
+
+ }else{
+
+  await navigator.clipboard.writeText(text);
+
+  alert("Progress copied. You can paste it anywhere.");
+ }
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHTML(str){
+
+ return String(str)
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderTemplates();
+updateTimer();
+
+</script>
+
+</body>
+</html>

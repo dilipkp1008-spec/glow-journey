@@ -1,0 +1,192 @@
+html {
+  height: 100%;
+  background: 50% 50% no-repeat
+    url('data:image/svg+xml,<svg viewBox="-20 -5 60 40" width="140" xmlns="http://www.w3.org/2000/svg" opacity="0.2"><path d="M1 8l11-7 11 7v8l-11 7-11-7zm0 0l11 8 11-8m0 8L12 8 1 16M12 1v7m0 8v7" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"/><text x="-12" y="32" font-size="5" font-family="monospace" fill="currentColor">Built on CodePen</text></svg>');
+}
+/* =====================================================
+   NEW FEATURE UI
+===================================================== */
+
+.feature-menu {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin:20px 0;
+}
+
+.feature-menu button,
+.feature-btn {
+  border:0;
+  padding:14px;
+  border-radius:16px;
+  background:#ead6d2;
+  color:#69484d;
+  font-weight:bold;
+}
+
+.feature-panel {
+  max-width:900px;
+  margin:20px auto;
+  padding:22px;
+  background:white;
+  border-radius:22px;
+  box-shadow:0 10px 35px #0002;
+}
+
+.feature-card {
+  background:#fff7f5;
+  border-radius:18px;
+  padding:18px;
+  margin:12px 0;
+}
+
+.feature-card h3 {
+  margin-top:0;
+}
+
+.progress-bar {
+  width:100%;
+  height:14px;
+  background:#eadede;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-fill {
+  height:100%;
+  width:0%;
+  background:#91666b;
+  transition:.3s;
+}
+
+.water-grid {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:15px 0;
+}
+
+.water-glass {
+  width:48px;
+  height:48px;
+  border:2px solid #91666b;
+  border-radius:12px;
+  background:white;
+  font-size:22px;
+}
+
+.water-glass.active {
+  background:#91666b;
+  color:white;
+}
+
+.routine-tabs {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.routine-tabs button {
+  border:0;
+  padding:10px 16px;
+  border-radius:20px;
+  background:#ead6d2;
+}
+
+.routine-list {
+  margin-top:15px;
+}
+
+.routine-item {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff7f5;
+  padding:12px;
+  margin:8px 0;
+  border-radius:12px;
+}
+
+.sleep-input {
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  margin:6px 0;
+}
+
+.timer-display {
+  font-size:48px;
+  text-align:center;
+  font-weight:bold;
+  margin:20px;
+}
+
+.star-rating {
+  display:flex;
+  gap:6px;
+}
+
+.star-rating button {
+  border:0;
+  background:none;
+  font-size:30px;
+}
+
+.shopping-row {
+  display:flex;
+  gap:8px;
+  margin:8px 0;
+}
+
+.shopping-row input {
+  flex:1;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:12px;
+}
+
+.achievement {
+  display:inline-block;
+  padding:15px;
+  margin:5px;
+  border-radius:15px;
+  background:#eee;
+  text-align:center;
+}
+
+.achievement.unlocked {
+  background:#ead6d2;
+}
+
+.search-box {
+  width:100%;
+  padding:14px;
+  border-radius:15px;
+  border:1px solid #ddd;
+  margin:10px 0 20px;
+}
+
+.daily-tip {
+  padding:18px;
+  background:#fff3d9;
+  border-radius:18px;
+  margin:15px 0;
+}
+
+.dark-mode {
+  background:#181416 !important;
+  color:#f5eeee !important;
+}
+
+.dark-mode .feature-panel,
+.dark-mode .feature-card {
+  background:#292225;
+  color:#fff;
+}
+
+@media(max-width:600px) {
+  .feature-menu {
+    grid-template-columns:1fr;
+  }
+}
