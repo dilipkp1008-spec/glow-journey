@@ -12,14 +12,14 @@
   "categories": ["beauty", "lifestyle", "health", "fitness"],
   "icons": [
     {
-      "src": "Screenshot_2026-08-30-17-28-16-27_ae33c6f1cf6771e633bcb779de95c7e0.jpg",
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "Screenshot_2026-08-30-17-28-16-27_ae33c6f1cf6771e633bcb779de95c7e0.jpg",
+      "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     }
   ]
 }
