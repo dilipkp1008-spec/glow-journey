@@ -4,15 +4,15 @@
   "display": "standalone",
   "name": "Glow Journey",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/glow-journey/",
   "short_name": "Glow Journey",
-  "start_url": "/",
+  "start_url": "/glow-journey/",
   "theme_color": "#1c1a1a",
   "description": "Your simple 30-day beauty and self-care planner with routines, hydration, sleep, progress tracking, daily tips, shopping list, and achievements.",
   "categories": ["beauty", "lifestyle", "health", "fitness"],
   "icons": [
     {
-      "src": "icon-512-1.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
